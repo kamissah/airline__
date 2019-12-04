@@ -1,0 +1,251 @@
+{% extends "flights/base.html" %}
+
+{% block title %} Flight {{ flight.id }} {% endblock %}
+
+{% block body %}
+<div class="container-fluid">  
+    <h4 class="text-primary">Flight's Information:</h4>
+    <div>
+        <ul>
+            <li>Is flight {{ flight.flightID }} Valid?: <strong>{{ flight.is_valid_flight }}</strong></li>
+            <li>Flight Number: <strong>{{ flight.id }}</strong></li>
+            <li>Flight ID: <strong>{{ flight.flightID }}</strong></li>
+            <li>Flight Date: <strong>{{ flight.date }}</strong></li>
+            <li>Origin: <strong>{{ flight.origin }}</strong></li>
+            <li>Destination: <strong>{{ flight.destination }}</strong></li>
+            <li>Duration: <strong>{{ flight.duration }}</strong></li>
+            <li>Aircraft: <a href=""><strong>{{ aircraft }}</strong></a></li>
+            <li>Aircraft Seat Capacity: <a href=""><strong>{{ flight.seatCapacity }}</strong></li></a>
+            <li>Callsign: <strong>{{ flight.callsign }}</strong></li>
+            <li>Status: <strong>{{ flight.status }}</strong></li>
+            <li>Expected Departure Time: <strong>{{ flight.eDepartureTime }}</strong></li>
+            <li>Expected Arrival Time: <strong>{{ flight.eArrivalTime }}</strong></li>
+            <li>Departure Time: <strong>{{ flight.departureTime }}</strong></li>
+            <li>Arrival Time: <strong>{{ flight.arrivalTime }}</strong></li>
+            <!--
+            <li>Is Departed: <strong>{{ flight.isDeparted }}</strong></li>
+            <li>Is Arrived: <strong>{{ flight.isArrived }}</strong></li>       
+            <li>Total Laggages Crews: <strong></strong></li>
+            <li>Total Laggages Weight(KG) Crews: <strong></strong></li>
+            <li>Total Laggages Passengers: <strong></strong></li>
+            <li>Total Laggages Weight(KG) Passenger: <strong></strong></li>
+            <li>Total Laggages: <strong></strong></li>
+            <li>Total Laggages Weight(KG): <strong></strong></li>
+            <li>Fuel Qty(Litres): <strong>{{ flight.fuelQty }}</strong></li>
+            <li>Fuel Weight(KG): <strong>{{ flight.fuelWeight }}</strong></li>
+            <li>Aircraft Ideal Weight: <a href=""><strong>{{ flight.flightaircraft.idealWeight }}</strong></a></li>
+            -->
+            <li>Remarks: <strong>{{ flight.remarks }}</strong></li>          
+        </ul>
+        <div>
+            <a class="text-warning" href="{% url 'flights:flightUpdate' flight.id %}">Update this flight if needed.</a>
+        </div>
+        <div>
+            <form action="{% url 'flights:flightDelete' flight.id %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <input type="hidden" name="delete" value="{{ flight.id }}" />
+                Clicking on the Delete button will delete flight <strong>{{ flight.flightID }}</strong><br> and all it associated passengers and crews.
+                <button type="submit" class="btn btn-outline-danger btn-sm">
+                <span class="">Delete</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <br>
+    
+    <div id="cal" class="table-responsive-sm" style="padding-right: 50%;">
+        <h4 class="text-primary">Calculations:</h4>
+        <table class="table table-bordered table-sm">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Item</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Weight(KG)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">Total Crews</th>
+                    <td><a href=""></a></td>
+                    <td><a href=""></a></td>                      
+                </tr>
+                <tr>
+                    <th scope="row">Total Passenger</th>
+                    <td><a href=""></a></td>
+                    <td><a href=""></a></td>                      
+                </tr>                
+                <tr>
+                    <th scope="row">Total Laggages Crews</th>
+                    <td><a href=""></a>1</td>
+                    <td><a href=""></a></td>                      
+                </tr>
+                <tr>
+                    <th scope="row">Total Laggages Passengers</th>
+                    <td><a href=""></a></td>
+                    <td><a href=""></a></td>                       
+                </tr>
+                <tr>
+                    <th scope="row">Fuel (Qty: Litres)</th>
+                    <td><a href=""><strong>{{ flight.fuelQty }}</strong></a></td>
+                    <td><a href=""><strong>{{ flight.fuelWeight }}</strong></a></td>                    
+                </tr>
+                <tr>
+                    <th scope="row">Totals</th>
+                    <td><a href=""></a></td>
+                    <td><a href=""></a></td>                      
+                </tr>
+                <tr>
+                    <th scope="row">Aircraft Ideal Weight</th>
+                    <td><a href=""></a></td>
+                    <td><a href=""></a></td>                      
+                </tr>             
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="1"><strong>Flight?</strong></td>
+                    <td colspan="1"><strong>#</strong></td>
+                    <td colspan="1"><strong>#</strong></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <br>
+
+    <div id="crew" class="table-responsive-sm">
+        <h4 class="text-primary">Crews on this flight:</h4>
+        <table class="table table-bordered table-sm">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Item</th>
+                    <th scope="col">Crew ID</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">Rank</th>
+                    <th scope="col">Weight(KG)</th>
+                    <th scope="col">Laggage Pieces</th>
+                    <th scope="col">Laggage Total Weight(KG)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for crew in crews_on_flight %}
+
+                    <tr>
+                        <td><a href="{% url 'flights:crewDetail' crew.id %}">{{ crew.id }}</a></td>
+                        <td><a href="{% url 'flights:crewDetail' crew.id %}">{{ crew.crewID }}</a></td>
+                        <td>{{ crew.firstName }}</td>
+                        <td>{{ crew.lastName }}</td>
+                        <td>{{ crew.gender }}</td>
+                        <td>{{ crew.rank }}</td>
+                        <td>{{ crew.weight }}</td>                        
+                        <td>{{ crew.laggagePieces }}</td>
+                        <td>{{ crew.laggageTotalWeight }}</td>                         
+                    </tr>
+                        {% empty %}
+                        <li>No crews on this Flight</li>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th scope="row">{{ flight_crews }}</th>
+                    <td colspan="3">Total Crews on board this Flight</td>
+                    <td colspan="2">Totals</td>
+                    <th scope="row"><strong>#</strong></td>
+                    <th scope="row"><strong>#</strong></td>
+                    <th scope="row"><strong>#</strong></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>    
+    <div id="crew-booking">
+        <!-- Booking of crew on a Flight -->
+        {% if non_crews %}
+        <h5 class="text-danger">Add a crew to this Flight</h5>
+        <form action="{% url 'flights:bookCrew' flight.id %}" method="post">
+            {% csrf_token %}
+            <select name="crew">
+                {% for crew in non_crews %}
+                    <option value="{{ crew.id }}">{{ crew }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" class="btn btn-primary btn-sm" value="Book Flight" />
+        </form>
+    {% else %}
+        <div>No crews to add.</div>
+    {% endif %}
+    </div>
+
+    <br>
+    
+    <div id="passenger" class="table-responsive-sm">
+        <h4 class="text-primary">Passengers on this flight:</h4>
+        <table class="table table-bordered table-sm">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Item</th>
+                    <th scope="col">Boarding Pass</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">Weight(KG)</th>
+                    <th scope="col">Laggage Pieces</th>
+                    <th scope="col">Laggage Total Weight(KG)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for passenger in passengers_on_flight %}
+
+                    <tr>
+                        <td><a href="{% url 'flights:passengerDetail' passenger.id %}">{{ passenger.id }}</a></td>
+                        <td><a href="{% url 'flights:passengerDetail' passenger.id %}">{{ passenger.boardingPass }}</a></td>
+                        <td>{{ passenger.firstName }}</td>
+                        <td>{{ passenger.lastName }}</td>
+                        <td>{{ passenger.gender }}</td>
+                        <td>{{ passenger.weight }}</td>
+                        <td>{{ passenger.laggagePieces }}</td>                       
+                        <td>{{ passenger.laggageTotalWeight }}</td>                      
+                    </tr>
+                        {% empty %}
+                        <li>No passengers on this Flight</li>
+                {% endfor %}   
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th scope="row">{{ flight_passengers }}</th>
+                    <td colspan="2">Total passengers on board this Flight</td>
+                    <td colspan="2">Totals</td>
+                    <th scope="row"><strong>#</strong></td>
+                    <th scope="row"><strong>#</strong></td>
+                    <th scope="row"><strong>#</strong></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div id="passenger-booking">
+        <!-- Booking of passenger on a Flight -->
+        {% if non_passengers %}
+        <h5 class="text-danger">Book a Passenger on this Flight</h5>
+        <form action="{% url 'flights:book' flight.id %}" method="post">
+            {% csrf_token %}
+            <select name="passenger">
+                {% for passenger in non_passengers %}
+                    <option value="{{ passenger.id }}">{{ passenger }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" class="btn btn-primary btn-sm" value="Book Flight" />
+        </form>
+        {% else %}
+            <div>No passengers to add.</div>
+        {% endif %}
+    </div>
+
+    <br>
+
+    <div><a href="{% url 'flights:flightList' %}">Back to back flight list.</a></div>
+    
+    <br>
+
+</div>
+{% endblock %}

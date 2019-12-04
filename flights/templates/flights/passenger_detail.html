@@ -1,0 +1,74 @@
+{% extends "flights/base.html" %}
+
+{% block title %}   Passenger {{ passenger.id }}    {% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+
+    <div id="" class="">
+        <a href="{{ passenger.get_absolute_url }}">
+            <img src="{{ passenger.photo.url }}" alt="passenger image" class="img-thumbnail rounded  img-fluid" >
+        </a>
+    </div>
+    <br>
+    <div class="table-responsive-sm">
+        <h4>Passenger with Boarding Pass: <strong>{{ passenger.boardingPass }}</strong> info:</h4>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Item</th>                   
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">Weight(KG)</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Mobile</th>
+                    <th scope="col">Country</th>
+                    <th scope="col">Flight</th>
+                    <th scope="col">Boarding Pass</th>
+                    <th scope="col">Seat Number</th>
+                    <th scope="col">Contact Person</th>
+                    <th scope="col">Contact Person's Phone</th>
+                    <th scope="col">Laggage Pieces</th>
+                    <th scope="col">Laggages Total Weight(KG)</th>
+                </tr>
+            <tbody>
+
+                <tr>
+                    <td>{{ passenger.id }}</td>
+                    <td>{{ passenger.firstName }}</td>
+                    <td>{{ passenger.lastName }}</td>
+                    <td>{{ passenger.gender }}</td>
+                    <td>{{ passenger.weight }}</td>
+                    <td>{{ passenger.email }}</td>
+                    <td>{{ passenger.mobile }}</td>
+                    <td>{{ passenger.country }}</td>
+                    <td>{{ passenger.flightID }}</td>
+                    <td>{{ passenger.boardingPass }}</td>
+                    <td>{{ passenger.seatNumber }}</td>
+                    <td>{{ passenger.contactPerson }}</td>
+                    <td>{{ passenger.contactPhone }}</td>
+                    <td>{{ passenger.laggagePieces }}</td>                       
+                    <td>{{ passenger.laggageTotalWeight }}</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <div><a href="{% url 'flights:passengerUpdate' passenger.id %}">Update this passenger if needed</a></div>
+    <div>
+        <form action="{% url 'flights:passengerDelete' passenger.id %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <input type="hidden" name="delete" value="{{ passenger.id }}" />
+            <button type="submit" class="btn btn-outline-danger btn-sm">
+            <span class="">Delete this Passenger</span>
+            </button>
+        </form>
+    </div>
+    <br>
+    <div><a href="{% url 'flights:flightList' %}">Back to flights list.</a></div>
+
+    <br>
+
+</div>
+{% endblock %}

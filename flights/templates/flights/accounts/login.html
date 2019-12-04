@@ -1,0 +1,50 @@
+{% extends "flights/base.html" %}
+
+{% block head_title %}Login | {{ block.super }}{% endblock head_title %}
+ 
+{% block body %}
+<div class="container-fluid">
+	
+	<h2>Login</h2>
+	{% if error_message %}
+	    <div>
+	        {{ error_message }}
+	    </div>
+	{% endif %}
+	<div>
+		<form action="{% url 'flights:loginUser' %}" method="post">
+		    {% csrf_token %}
+			<div class="form-row align-items-center">
+
+			    <div class="col-sm-3 my-1">
+			      <label class="sr-only" for="inlineFormInputGroupUsername">Username</label>
+			      <div class="input-group">
+			        <div class="input-group-prepend">
+			          <div class="input-group-text">@</div>
+			        </div>
+			        <input name="username" type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="Username">
+			      </div>
+			    </div>
+			    <div class="col-sm-3 my-1">
+			      <label class="sr-only" for="inlineFormInputName">Password</label>
+			      <input name="password" type="password" class="form-control" id="inlineFormInputName" placeholder="Password">
+			    </div>
+			    <div class="col-auto my-1">
+			      <div class="form-check">
+			        <input class="form-check-input" type="checkbox" id="autoSizingCheck2">
+			        <label class="form-check-label" for="autoSizingCheck2">
+			          Remember me
+			        </label>
+			      </div>
+			    </div>
+			    <div class="col-auto my-1">
+			      <button type="submit" class="btn btn-primary">Login</button>
+			    </div>
+			</div>
+		</form>
+	</div>
+
+</div>
+{% endblock %}
+
+

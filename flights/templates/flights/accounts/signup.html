@@ -1,0 +1,23 @@
+{% extends "flights/base.html" %}
+
+{% block head_title %}User Form | {{ block.super }}{% endblock head_title %}
+ 
+{% block body %}
+<div>
+	
+	<div class="container">
+		<h4>Create a new user</h4>
+		{% if error_message %}
+			<p><strong>{{ error_message }}</strong></p>
+		{% endif %}
+		<form class="" role="form" action="" method="post" >
+			{% csrf_token %}
+			{% include 'flights/template_form.html' %}
+			<div>
+				<button type="submit">Submit</button>
+			</div>
+		</form>
+	</div>
+
+</div>
+{% endblock %}

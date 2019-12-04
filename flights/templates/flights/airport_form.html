@@ -1,0 +1,24 @@
+{% extends 'flights/base.html' %}
+
+{% block head_title %}Airport | {{ block.super }}{% endblock head_title %}
+ 
+{% block body %}
+<div>
+	
+	<div class="container">
+		<h4 class="text-primary">Create a new airport</h4>
+		{% if error_message %}
+			<p><strong>{{ error_message }}</strong></p>
+		{% endif %}
+		<form class="" role="form" action="" method="post" >
+			{% csrf_token %}
+			{% include 'flights/template_form.html' %}
+			<div>
+				<button type="submit" class="btn btn-success btn-sm">Submit</button>
+			</div>
+		</form>
+	</div>
+	<br>
+	
+</div>
+{% endblock %}

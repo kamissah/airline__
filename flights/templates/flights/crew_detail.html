@@ -1,0 +1,75 @@
+{% extends "flights/base.html" %}
+
+{% block title %}   Crew {{ crew.id }} detail   {% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+
+    <div id="" class="">
+        <a href="{{ crew.get_absolute_url }}">
+            <img src="{{ crew.photo.url }}" alt="crew image" class="img-thumbnail rounded  img-fluid"  >
+        </a>
+    </div>
+    <br>
+    <div class="table-responsive-sm">
+        <h4>Crew with ID: <strong>{{ crew.crewID }}</strong> info:</h4>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Item</th>
+                    <th scope="col">Crew ID</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">Weight(KG)</th>
+                    <th scope="col">Rank</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Mobile</th>
+                    <th scope="col">Country</th>
+                    <th scope="col">Contact Person</th>
+                    <th scope="col">Contact Phone</th>
+                    <th scope="col">Laggage Pieces</th>
+                    <th scope="col">Laggages Total Weight(KG)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ crew.id }}</td>
+                    <td>{{ crew.crewID }}</td>
+                    <td>{{ crew.firstName }}</td>
+                    <td>{{ crew.lastName }}</td>
+                    <td>{{ crew.gender }}</td>
+                    <td>{{ crew.weight }}</td>
+                    <td>{{ crew.rank }}</td>
+                    <td>{{ crew.email }}</td>
+                    <td>{{ crew.mobile }}</td>
+                    <td>{{ crew.country }}</td> 
+                    <td>{{ crew.contactPerson }}</td>
+                    <td>{{ crew.contactPhone }}</td>
+                    <td>{{ crew.laggagePieces }}</td>
+                    <td>{{ crew.laggageTotalWeight }}</td>                   
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>Remarks: <strong>{{ crew.remarks }}</strong></div>
+    <br> 
+    <div><a href="{% url 'flights:crewUpdate' crew.id %}">Update this crew if needed</a></div>
+    <div>
+        <form action="{% url 'flights:crewDelete' crew.id %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <input type="hidden" name="delete" value="{{ crew.id }}" />
+            <button type="submit" class="btn btn-outline-danger btn-sm">
+            <span class="">Delete this Crew</span>
+            </button>
+        </form>
+    </div>
+    <br>
+    <div>
+        <a href="{% url 'flights:crewList' %}">Back to crew list.</a>
+        <a href="{% url 'flights:flightList' %}">Back to flights list.</a>
+    </div>
+    <br>
+    
+</div>
+{% endblock %}

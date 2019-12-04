@@ -1,0 +1,57 @@
+{% extends "flights/base.html" %}
+
+{% block title %} Crew List {% endblock %}
+
+{% block body %}
+<div id="" class="container-fluid">
+
+	<div class="table-responsive-sm">
+		<h2>Crews</h2>
+	    <table class="table table-bordered">
+			<thead class="thead-light">
+				<tr>
+					<th>Item</th>
+					<th>Crew ID</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Gender</th>
+					<th>Rank</th>
+<!--
+					
+					<th>Email</th>
+					<th>Mobile</th>
+					<th>Country</th>
+					<th>Remarks</th>
+					<th>Time Created</th>
+					<th>Time Updated</th>
+-->					
+				</tr>
+			</thead>
+			<tbody>
+				{% for crew in crews %}
+
+					<tr>
+						<td><a href="{% url 'flights:crewDetail' crew.id %}"> {{ crew.id }}</a></td>
+						<td><a href="{% url 'flights:crewDetail' crew.id %}">{{ crew.crewID }}</a></td>
+						<td>{{ crew.firstName }}</td>
+						<td>{{ crew.lastName }}</td>
+						<td>{{ crew.gender }}</td>
+						<td>{{ crew.rank }}</td>
+<!--
+						
+						<td>{{ crew.email }}</td>
+						<td>{{ crew.mobile }}</td>
+						<td>{{ crew.country }}</td>
+						<td>{{ crew.remarks }}</td>
+						<td>{{ crew.timeCreated }}</td>
+						<td>{{ crew.timeUpdated }}</td>
+-->
+					</tr>
+				
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+</div>
+{% endblock %}

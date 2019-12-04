@@ -1,0 +1,60 @@
+{% extends "flights/base.html" %}
+
+{% block title %} Flights {% endblock %}
+
+{% block body %}
+<div id="" class="container-fluid">
+
+	<div class="table-responsive-sm">
+		<h2>Flights</h2>
+	    <table class="table table-bordered table-sm">
+			<thead class="thead-light">
+				<tr >
+					<th>Item</th>
+					<th>Flight ID</th>
+					<th>Flight Date</th>
+					<th>Origin</th>
+					<th>Destination</th>
+					<th>Duration</th>
+					<th>Aircraft</th>
+					<th>Status</th>
+					<th>Expected Departure</th>
+					<th>Expected Arrival</th>					
+					<th>Departure Time</th>
+					<th>Arrival Time</th>
+					<!--
+					<th>Is Departed</th>
+					<th>Is Arrived</th>
+					-->
+				</tr>
+			</thead>
+			<tbody>
+				{% for flight in flights %}
+
+					<tr>
+						<td><a href="{% url 'flights:flightDetail' flight.id %}"> {{ flight.id }}</a></td>
+						<td><a href="{% url 'flights:flightDetail' flight.id %}"> {{ flight.flightID }}</a></td>
+						<td>{{ flight.date }}</td>
+						<td>{{ flight.origin }}</td>
+						<td>{{ flight.destination }}</td>
+						<td>{{ flight.duration }}</td>
+						<td>{{ aircraft }}</td>
+						<td>{{ flight.status}}</td>
+						<td>{{ flight.eDepartureTime }}</td>
+						<td>{{ flight.eArrivalTime }}</td>
+						<td>{{ flight.departureTime }}</td>
+						<td>{{ flight.arrivalTime }}</td>
+						<!--
+						<td>{{ flight.isDeparted }}</td>
+						<td>{{ flight.isArrived }}</td>
+						-->
+					</tr>
+				
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	<div><h4>Total Flights: <strong>{{ flight_count }}</strong></h4></div>
+
+</div>
+{% endblock %}
